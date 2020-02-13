@@ -1,35 +1,52 @@
 import os
-from flask import Flask
+from flask import Flask, request, jsonify, render_template
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+
 app = Flask(__name__)
 
-def num(s):
-    try:
-        return float(s)
-    except ValueError:
-        return 'err'
+# Train model on startup
+data = pd.read_csv('./data/Iris.csv')
+x = data[['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']]
+y = data.Species
+le = LabelEncoder()
+le.fit(y)
+y = le.transform(y)
+model = RandomForestClassifier()
+model.fit(x, y)
+print('Trained')
 
-@app.route('/')
-def hello():
-    return '<h1><a href="/square/5">Click here to square 5</a></h1>'
+@app.route('/predict', methods=['POST'])
+def predict():
+  # Get the request body
+  data = request.json
 
-@app.route('/square/<n>')
-def square(n):
-	n = num(n)
-	if type(n) == str:
-		return 'you cant square a string silly'
-	else:
-		return f'{float(n)} squared is {n**2}'
+  # Easy to change to multipredict
+  if type(data) is list:
+    return('Please just provide one example')
+  else:
+    # Need to add type checking and property name check
 
-@app.route('/cube/<n>')
-def cube(n):
-	n = num(n)
-	if type(n) == str:
-		return 'you cant cube a string silly'
-	else:
-		return f'{float(n)} cubed is {n**3}'
+    # This is where all the data transformation would be
+    data = pd.DataFrame(data, index=[0])
+    print(data)
+    pred = model.predict(data)
+    print(pred)
+    label = le.inverse_transform(pred)
+    prob = model.predict_proba(data)
+    # print()
+    # return 'a'
+    return jsonify(label = label[0], proba = prob[0][pred[0]])
 
+
+@app.route('/', methods=['GET'])
+def root():
+  return render_template('index.html')
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True,host='0.0.0.0',port=port)
+  # train_model()
+  port = int(os.environ.get("PORT", 5000))
+  app.run(debug=True,host='0.0.0.0',port=port)
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Iris Predict</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style type="text/css">label, input {display: block}</style>
+</head>
+<body></body>
+<script src="https://unpkg.com/mithril/mithril.js"></script>
+<script type="text/javascript">
+class App {
+  constructor() {
+    this.props = {
+      "SepalLengthCm": 2,
+      "SepalWidthCm": 3,
+      "PetalLengthCm": 1,
+      "PetalWidthCm": 1
+    }
+  }
+  getPrediction() {
+    console.log(this.props)
+    m.request({
+      'method': 'POST',
+      'url': '/predict',
+      'body': this.props
+    })
+    .then((res) => {
+      console.log(res)
+      this.prediction = true
+      this.pred = res
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+  view() {
+    return m('', {style: {position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%'}},
+      m('label', 'SepalLengthCm'),
+      m('input', {onkeyup: (e) => this.props.SepalLengthCm = parseFloat(e.target.value), type: 'number'}),
+      m('label', 'SepalWidthCm'),
+      m('input', {onkeyup: (e) => this.props.SepalWidthCm = parseFloat(e.target.value), type: 'number'}),
+      m('label', 'PetalLengthCm'),
+      m('input', {onkeyup: (e) => this.props.PetalLengthCm = parseFloat(e.target.value), type: 'number'}),
+      m('label', 'PetalWidthCm'),
+      m('input', {onkeyup: (e) => this.props.PetalWidthCm = parseFloat(e.target.value), type: 'number'}),
+      m('button', {onclick: () => this.getPrediction()}, 'Hi'),
+      this.prediction ? m('h1', this.pred.label + ' prob: ' + this.pred.proba) : m('')
+    )
+  }
+}
+
+m.mount(document.body, App)
+</script>
+</html>
