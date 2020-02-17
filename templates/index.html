@@ -34,7 +34,7 @@ class App {
     })
   }
   view() {
-    return m('', {style: {position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%'}},
+    return m('', {style: {position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%', padding: '2rem'}},
       m('label', 'SepalLengthCm'),
       m('input', {onkeyup: (e) => this.props.SepalLengthCm = parseFloat(e.target.value), type: 'number'}),
       m('label', 'SepalWidthCm'),
@@ -43,7 +43,7 @@ class App {
       m('input', {onkeyup: (e) => this.props.PetalLengthCm = parseFloat(e.target.value), type: 'number'}),
       m('label', 'PetalWidthCm'),
       m('input', {onkeyup: (e) => this.props.PetalWidthCm = parseFloat(e.target.value), type: 'number'}),
-      m('button', {onclick: () => this.getPrediction()}, 'Hi'),
+      m('button', {onclick: () => this.getPrediction()}, 'Submit'),
       this.prediction ? m('h1', this.pred.label + ' prob: ' + this.pred.proba) : m('')
     )
   }

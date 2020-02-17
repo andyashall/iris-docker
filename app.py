@@ -23,8 +23,9 @@ def predict():
   # Get the request body
   data = request.json
 
-  # Easy to change to multipredict
+  # Check if data is a dict or list 
   if type(data) is list:
+    # Feel free to add the code to to return multiple predictions
     return('Please just provide one example')
   else:
     # Need to add type checking and property name check
