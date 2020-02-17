@@ -9,13 +9,8 @@ variables:
 
 steps:
 - task: Docker@2
-  displayName: Build an image
-  inputs:
-    repository: $(imageName)
-    command: build
-    Dockerfile: Dockerfile
-- task: buildAndPush@0
-  inputs:
-    containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Free Trial(758becc8-a4de-4d7d-931c-92a77ed63c9a)'
-    azureContainerRegistry: '{"loginServer":"aaflask.azurecr.io", "id" : "/subscriptions/758becc8-a4de-4d7d-931c-92a77ed63c9a/resourceGroups/flask/providers/Microsoft.ContainerRegistry/registries/aaFlask"}'
+  displayName: Push
+  inputs: 
+    command: buildAndPush
+    repository: andyashall/iris
+    tags: latest
