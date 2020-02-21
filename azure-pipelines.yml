@@ -9,26 +9,21 @@ variables:
 
 steps:
 - task: Docker@2
-  displayName: Login to ACR
-  inputs:
-    command: login
-    containerRegistry: docker.io
-- task: Docker@2
   displayName: Push
   inputs: 
     command: buildAndPush
     repository: andyashall/iris
     tags: latest
 
-# resources:         
-#   containers:
-#   - container: petStore      
-#     type: ACR  
-#     azureSubscription: ContosoARMConnection
-#     resourceGroup: ContosoGroup
-#     registry: petStoreRegistry
-#     repository: myPets
-#     trigger: 
-#       tags:
-#         include: 
-#         - production* 
+resources:         
+  containers:
+  - container: iris      
+    type: ACR  
+    azureSubscription: 758becc8-a4de-4d7d-931c-92a77ed63c9a
+    resourceGroup: flask
+    registry: aaFlask
+    repository: iris
+    trigger: 
+      tags:
+        include: 
+        - production* 
