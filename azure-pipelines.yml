@@ -19,3 +19,16 @@ steps:
     command: buildAndPush
     repository: andyashall/iris
     tags: latest
+
+# resources:         
+#   containers:
+#   - container: petStore      
+#     type: ACR  
+#     azureSubscription: ContosoARMConnection
+#     resourceGroup: ContosoGroup
+#     registry: petStoreRegistry
+#     repository: myPets
+#     trigger: 
+#       tags:
+#         include: 
+#         - production* 
