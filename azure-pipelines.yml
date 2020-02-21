@@ -7,14 +7,6 @@ pool:
 variables:
   imageName: 'iris'
 
-steps:
-- task: Docker@2
-  displayName: Push
-  inputs: 
-    command: buildAndPush
-    repository: andyashall/iris
-    tags: latest
-
 resources:         
   containers:
   - container: iris      
@@ -27,3 +19,11 @@ resources:
       tags:
         include: 
         - production* 
+
+steps:
+- task: Docker@2
+  displayName: Push
+  inputs: 
+    command: buildAndPush
+    repository: aaFlask/iris
+    tags: latest
