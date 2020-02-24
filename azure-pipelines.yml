@@ -25,5 +25,5 @@ steps:
   displayName: Push
   inputs: 
     command: buildAndPush
-    repository: aaFlask/iris
+    repository: andyashall/iris
     tags: latest
