@@ -35,13 +35,13 @@ resources:
 #     displayName: Build job
 #     pool:
 #       vmImage: iris
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: aaflask.azurecr.io/iris
-        dockerfile: Dockerfile
-        containerRegistry: aaflask.azurecr.io
+steps:
+- task: Docker@2
+  displayName: Build and push an image to container registry
+  inputs:
+    command: buildAndPush
+    repository: aaflask.azurecr.io/iris
+    dockerfile: Dockerfile
+    containerRegistry: aaflask.azurecr.io
         # tags: |
         #   $(tag)
