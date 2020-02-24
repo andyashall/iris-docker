@@ -20,7 +20,7 @@ resources:
         include: 
         - production* 
 
-# steps:
+steps:
 # - task: Docker@2
 #   displayName: Push
 #   inputs: 
