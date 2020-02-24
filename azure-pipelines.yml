@@ -20,10 +20,28 @@ resources:
         include: 
         - production* 
 
-steps:
-- task: Docker@2
-  displayName: Push
-  inputs: 
-    command: buildAndPush
-    repository: andyashall/iris
-    tags: latest
+# steps:
+# - task: Docker@2
+#   displayName: Push
+#   inputs: 
+#     command: buildAndPush
+#     repository: andyashall/iris
+#     tags: latest
+
+- stage: Build
+  displayName: Build and push stage
+  jobs:  
+  - job: Build
+    displayName: Build job
+    pool:
+      vmImage: iris
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: aaflask.azurecr.io/iris
+        dockerfile: Dockerfile
+        containerRegistry: aaflask.azurecr.io
+        # tags: |
+        #   $(tag)
