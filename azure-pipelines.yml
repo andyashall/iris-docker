@@ -43,5 +43,6 @@ steps:
     repository: aaflask.azurecr.io/iris
     dockerfile: Dockerfile
     containerRegistry: aaflask.azurecr.io
-        # tags: |
-        #   $(tag)
+        tags: |
+          latest
+
